@@ -179,6 +179,9 @@ table td {
 #aside_content .author-info__description {
   font-family: Titillium Web, PingFang SC, Hiragino Sans GB, "Microsoft YaHei", Helvetica Neue, Helvetica, Arial, sans-serif;
 }
+.full_page #site-sub-title {
+  margin-top: 60px;
+}
 .is_right {
   text-align: right;
 }
