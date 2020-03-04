@@ -2396,6 +2396,7 @@ header {
   }
   #site-sub-title {
     font-size: 1.2rem;
+    margin-top: 35px;
   }
 }
 @media screen and (max-width: 768px) {
