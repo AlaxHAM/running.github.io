@@ -2101,6 +2101,7 @@ blockquote footer cite:before {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
+  padding-top: 70px;
 }
 #footer:before {
   position: absolute;
@@ -2187,6 +2188,7 @@ blockquote footer cite:before {
   text-align: center;
   text-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.15);
   line-height: 1.5;
+  margin-top: 35px;
 }
 #site-title {
   font-weight: bold;
