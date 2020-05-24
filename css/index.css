@@ -44,7 +44,7 @@ body {
   height: 8px;
 }
 *::-webkit-scrollbar-thumb {
-  background: $light-yellow;
+  background: #dbdbdb;
 }
 *::-webkit-scrollbar-track {
   background-color: transparent;
@@ -2935,7 +2935,7 @@ header {
   margin-top: 20px;
   width: 75%;
   border-radius: 8px;
-  background: #fff;
+  background: rgba(255,255,255,0.3);
   -webkit-box-shadow: 0 4px 8px 6px rgba(7,17,27,0.06);
   box-shadow: 0 4px 8px 6px rgba(7,17,27,0.06);
   -webkit-transition: all 0.3s;
