@@ -4,24 +4,11 @@
   
     
     <entry>
-      <title>Hello World</title>
+      <title>hello-world</title>
       <link href="/2020/05/25/hello-world/"/>
       <url>/2020/05/25/hello-world/</url>
       
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></div><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>new article</title>
-      <link href="/2020/01/16/new-article/"/>
-      <url>/2020/01/16/new-article/</url>
-      
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<h3 id="Hello-world"><a href="#Hello-world" class="headerlink" title="Hello~ world : )"></a>Hello~ world : )</h3><p>​    终于，我的博客问世了，可喜可贺。为什么要博客呢，最重要的目的其实就是为了做技术积累，和一些生活记录吧，以往总是在学习之后，只是使用 word 或 思维导图，去做一些记录，但是怎么看怎么丑，而且查看起来也不是特别的方便，于是就开始了一段博客搭建之旅。</p><p>​    这一说，还有些惭愧了，自己也不是技术能人，只是会些皮毛的小角色。在搭建博客的过程中，一度拖着，仅仅就是弄了框就什么也没弄了，简直 “鸽子王”。好在，这些天终于弄好了，虽然整体上来说弄得有点胡里花哨的，加载也挺慢，图片也不美，但，但是也算是有个完整的了嘛。那接下来的就是，将之前的文本记录整理整理，陆续加入了这个博客中。</p><p>​    最后，祝愿一切都好！</p><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">python</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python</span></span><br><span class="line">print(<span class="string">"hello-world :)"</span>)</span><br></pre></td></tr></table></figure></div><p><a href="C:%5CUsers%5CDELL%5CPictures%5C83adc9abecc4a907be11378a0e16472d1dbcd08ff0f33-yCEZ2s_fw658.gif" data-fancybox="group" data-caption class="fancybox"><img alt data-src="C:%5CUsers%5CDELL%5CPictures%5C83adc9abecc4a907be11378a0e16472d1dbcd08ff0f33-yCEZ2s_fw658.gif" class="lazyload" title></a></p>]]></content>
       
       
       
