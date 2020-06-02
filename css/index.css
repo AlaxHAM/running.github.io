@@ -383,6 +383,9 @@ canvas,
     padding-left: 0 !important;
   }
 }
+.aplayer .aplayer-list ol {
+  max-height: 164px;
+}
 @-moz-keyframes scroll-down-effect {
   0% {
     top: 0;
@@ -1401,7 +1404,7 @@ blockquote footer cite:before {
   color: #7c4dff;
 }
 .article-container pre .comment {
-  color: rgba(144,164,174,0.565);
+  color: #008080;
 }
 .article-container pre .comment::selection {
   background: rgba(128,203,196,0.251);
@@ -3397,7 +3400,7 @@ header {
 }
 a {
   color: #4a708b;
-  font-size: 1.2em;
+  font-size: 1.1em;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   -o-transition: all 0.2s;
