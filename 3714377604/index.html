@@ -127,11 +127,11 @@ function activateLightMode(){
 <p>​    list（列表）：支持双端操作，可用作双端队列，比如用户的关注，粉丝列表，或是作为消息队列</p>
 <p>​    hash（哈希表）：用来存储彼此相关信息的键值对</p>
 <p>​    set（集合）：存储不重复元素，用来实现去重，比如存储标签</p>
-<p>​    sorted set（有序集合）：可以用来实现信息的排行榜功能</p>
+<p>​    sorted set（有序集合）：可以用来实现信息的排行榜功能!</p>
 <p><a href="https://alexham.top/img/redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%BB%93%E6%9E%84.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%BB%93%E6%9E%84.jpg" class="lazyload"></a></p>
 <p>​    <strong>扩展：五种类型的底层实现</strong></p>
 <p>​    string：使用 sds（simple dynamic string，简单动态字符串），可以存储文本或二进制的数据。sds 会分为三部分，free 表示剩余空间，len 来记录字符串的长度，这样就能以 O(1) 的时间来查询到字符串的长度值，真正字符串数据存在在 buff 中，字符串的末尾会加一个空字符 <code>\0</code></p>
-<p>​    <a href="https://alexham.top/img/redis-sds.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-sds.jpg" class="lazyload"></a></p>
+<p><a href="https://alexham.top/img/redis-sds.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-sds.jpg" class="lazyload"></a></p>
 <p>​    list：使用 ziplist 或 double linked list，3.2 版本中又增加了 quicklist，quicklist 可以看作是前两者的结合</p>
 <p>​    ziplist（压缩列表），同样是一个连续地址的结构，与数组最大的区别就是 <strong>节省了内存的使用</strong>，因为数组中每一个元素的大小都是相同的，这就意味着如果一个数组中大部分的元素都很短小，比如数组创建后每一个元素都是固定 20 字节，但是使用时每一个元素都使用一般不到，那么每一个元素都会存在浪费的空间；ziplist 的不同就是每一个元素的大小全部根据元素的真实大小来存储，这样一来就剩下了很多内存空间</p>
 <p>​    同时，压缩列表的头部有三个字段，zlbytes 即列表的字节长度，zltail 即列表尾部偏移量，zllen 即压缩列表中元素的个数，同时在列表最后还有一个字段，zlend 即表示列表结束位置。那么对于压缩列表的查询第一个元素和最后一个元素，就可以直接根据头三个字段去查询得到，也就是说压缩列表的头尾两个元素的查找都是 O(1) 的，其他位置的查找依然是 O(n)</p>
@@ -168,19 +168,19 @@ function activateLightMode(){
 <p>​    <strong>BGSAVE：</strong></p>
 <p>​    可以看作是     <code>save</code> 命令的一个优化，<code>bgsave</code> 命令发起持久化操作，redis 主进程会先调用 <strong>fork 创建一个子进程</strong>，并将生成 rdb 文件的持久化操作交给该子进程来实现，此时 <strong>redis 服务不会被阻塞</strong> 住，依然接收其他客户端请求并响应</p>
 <p>​    <strong>补充：</strong>bgsave 子进程虽然不会阻塞主进程，但是这是仅限于读操作。然而对于写操作，bgsave 在进行全量快照的时，redis 会将涉及写操作的数据进行拷贝，产生一个原数据的副本，bgsave 快照仅仅是对这个副本进行快照备份，所以 redis 的主线程不会因为 bgsave 而对写操作产生影响</p>
-<p>​    另外 RDB 的快照只是在第一次进行一次全量快照，后续的快照则是通过增量快照来备份数据。目的是防止短期内大量的全量快照，会造成磁盘压力增加导致性能损失，同时后续的增量快照会去判断在全量快照后，对之后被修改的数据进行增量快照，但是如果数据量很大，即使是增量快照同样会直接影响到性能，并且每次去标记判断数据是否被修改，还会需要额外的空间</p>
-<p><a href="https://alexham.top/img/redis-bgsave.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-bgsave.jpg" class="lazyload"></a> </p>
+<p>​    另外 <strong>RDB 的快照只是在第一次进行一次全量快照，后续的快照则是通过增量快照来备份数据</strong>。目的是防止短期内大量的全量快照，会造成磁盘压力增加导致性能损失，同时后续的增量快照会去判断在全量快照后，对之后被修改的数据进行增量快照，但是如果数据量很大，即使是增量快照同样会直接影响到性能，并且每次去标记判断数据是否被修改，还会需要额外的空间</p>
+<p>​    <a href="https://alexham.top/img/redis-bgsave.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-bgsave.jpg" class="lazyload"></a> </p>
 <p>​    对于自动触发，则是在 redis 的 conf 中配置 save 选项，当条件满足后会自动触发，使用   <code>bgsave</code> 命令去进行持久化</p>
 <p>​    save 的配置项为： <code>savem m n</code>，m 表示秒数，n 表示次数，整个配置表示在 m 秒中执行 n 次命令就执行一次持久化；默认在 redis.conf 配置文件中有三种状态的持久化配置，其中任何一种状态满足就会自动去触发持久化操作</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br></pre></td></tr></table></figure></div>
 
 <p>​    每次创建 rdb 文件后，服务器会自动将时间计数器和次数计数器置为零，并从新开始计数</p>
 <p>​    <strong>恢复：</strong></p>
-<p>​    当 redis 服务出现问题或宕机，再次启动后会 <strong>自动检测 dump.rdb 文件，来进行数据恢复</strong></p>
+<p>​    当 redis 服务出现问题或宕机，再次启动后会 <strong>自动检测 dump.rdb 文件，通过加载来进行数据恢复</strong></p>
 <h4 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h4><p>​    与 RDB 一样都是通过写入文件来创建持久化，但 AOF 默认不是开启的，所以要是用 AOF 持久化，需要设置配置项，在 <strong>conf 文件中设置 <code>appendonly yes</code> 开启 AOF</strong></p>
-<p>​    对于   <strong>AOF 写入，实际上分成了两个步骤，操作命令首先会被写入到 <code>aof_buf</code> 缓存中，然后 redis 通过配置项中的设置来做不同的策略将缓冲区的命令继续追加写入到文件中</strong></p>
-<p>​    <a href="https://alexham.top/img/redis-aof.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-aof.jpg" class="lazyload"></a></p>
-<p>​    AOF 之所以先在内存中执行命令写入后，再去进行磁盘的追加写进行日志记录，其目的是为了防止在日志文件中记录不必要的错误命令，造成额外的存储与检查开销，以及在进行日志恢复时可能出现的错误；同时另一个好处是，”后写”日志将不会阻塞命令的写入执行</p>
+<p>​    对于   <strong>AOF 写入，实际上分成了两个步骤，首先操作命令会先被执行，再被写入到 <code>aof_buf</code> 缓存中，然后 redis 通过配置项中的设置来做不同的策略将缓冲区的命令继续追加写入到文件中</strong></p>
+<p><a href="https://alexham.top/img/redis-aof.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-aof.jpg" class="lazyload"></a></p>
+<p>​    AOF 之所以先在内存中执行命令写入后，再去进行磁盘的追加写进行日志记录，其目的是为了防止在日志文件中记录不必要的错误命令，造成额外的存储与检查开销，以及在进行日志恢复时可能出现的错误；同时另一个好处是，”后写” 日志将不会阻塞命令的写入执行</p>
 <p>​    但是 AOF 如果执行完命令，还没来及写日志就宕机，且 redis 不是做缓存而是直接作为数据库的话，就会导致数据丢失并无法恢复；并且，如果 AOF 在主线程中去执行日志写入，虽然不会阻塞当前命令，但是如果磁盘压力较大的话，还是会导致后续的命令执行会出现阻塞状态</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">appendfsync always</span><br><span class="line"># always 表示命令写入到 aof_buf 缓冲区后，立马调用 fsync 命令进行同步追加写到文件</span><br><span class="line"></span><br><span class="line">appendfsync everysec</span><br><span class="line"># everysec 表示先调用系统 write 操作，然后返回。fsync 的操作则由专门的线程每隔 1 秒执行一次文件写入</span><br><span class="line"></span><br><span class="line">appendfsync no</span><br><span class="line"># no 表示调用 write 后，不会进行 aof 文件的同步，同步操作由操作系统自己负责，周期最长为 30 秒</span><br></pre></td></tr></table></figure></div>
 
@@ -192,19 +192,19 @@ function activateLightMode(){
 <p>​    <strong>重写机制：</strong></p>
 <p>​    值得一提的是重写机制本身并不是真的完全重写，而是通过策略进行优化通过新的文件覆盖旧文件实现</p>
 <p>​    因为 AOF 是追加写入方式，所以会随着命令的不断写入，导致 AOF 文件的不断增大占用更多的磁盘空间，比如对一个 key 反复设置不同的 value，而真正有用的只有最后一次设置的 value，而之前的设置就都是无用的命令；又或者操作的 key 已经过期被删除，那文件记录的命令也是无效命令，以及对一个列表的元素添加命令是分开执行，而不是整合在一个命令，这样的情况都会额外增加文件的空间</p>
-<p>​    <a href="https://alexham.top/img/redis-%E9%87%8D%E5%86%99%E6%9C%BA%E5%88%B6.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-%E9%87%8D%E5%86%99%E6%9C%BA%E5%88%B6.jpg" class="lazyload"></a></p>
+<p><a href="https://alexham.top/img/redis-%E9%87%8D%E5%86%99%E6%9C%BA%E5%88%B6.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-%E9%87%8D%E5%86%99%E6%9C%BA%E5%88%B6.jpg" class="lazyload"></a></p>
 <p>​    为了对此进行优化 redis 提供重写机制，将上面提到的重写策略进行优化，可以 <strong>通过手动启动使用命令 <code>bgrewriteaof</code></strong>，自动启动同样是在配置文件中进行设置</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line"># percentage 表示 aof 文件距离上次文件增长的超过多少的百分比来触发重写</span><br><span class="line"></span><br><span class="line">auto-aof-rerite-min-size 64mb</span><br><span class="line"># min-size 表示 aof 文件体积最小达到多少来触发重写</span><br></pre></td></tr></table></figure></div>
 
 <p>​    当满足所有设置的条件，会自动触发 AOF 重写，redis 会扫描整个实例的数据，重新生成一个 aof 文件</p>
 <p>​    <strong>进程 AOF 持久化时，redis 的主进程会 fork 出一个子进程来做操作，在此期间 redis 是阻塞状态，且 fork 出的子进程与主进程是公用一个内存的，为了避免 fork 期间阻塞无法接收写命令</strong></p>
 <p>​    fork 完成后， <strong>redis 会开启 <code>aof_rewrite_buf</code> 重写缓冲区，由于 fork 的子进程和主进程是共享内存空间的，所以 fork 创建完子进程后，子进程会去拷贝数据到 <code>aof_rewrite_buf</code>，这样即不会阻塞主线程接收命令，同时也将数据做了一次备份，来确保数据不丢失</strong></p>
-<p>​    <a href="https://alexham.top/img/redis-%E9%87%8D%E5%86%99%E8%BF%87%E7%A8%8B.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-%E9%87%8D%E5%86%99%E8%BF%87%E7%A8%8B.jpg" class="lazyload"></a></p>
+<p><a href="https://alexham.top/img/redis-%E9%87%8D%E5%86%99%E8%BF%87%E7%A8%8B.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-%E9%87%8D%E5%86%99%E8%BF%87%E7%A8%8B.jpg" class="lazyload"></a></p>
 <p>​    主进程会从   <code>aof_rewrite_buf</code> 获取命令根据重写策略来写入到子进程创建的 AOF 文件，随后利用这个新的文件将原本的 AOF 文件进行替换</p>
-<p>​    <strong>补充：</strong>redis 的 aof 重写使用了两个 aof 的文件。首先，如果重写机制是在原 aof 上做操作，那么最直接的问题就是主进程会和 fork 的子进程会产生操作的竞争，那么解决竞争问题就势必会影响主进程的性能；其次，使用同一个 aof 文件的话，也存在另一个问题，如果 aof 重写过程中出现错误，整个文件就基本作废了，那么无法在恢复到原来的数据</p>
+<p>​    <strong>补充：</strong>redis 的 aof 重写之所要创建一个新的 aof 文件是因为，如果重写机制是在原 aof 上做操作，那么最直接的问题就是主进程会和 fork 的子进程会产生操作的竞争，那么解决竞争问题就势必会影响主进程的性能；其次，使用同一个 aof 文件的话，也存在另一个问题，如果 aof 重写过程中出现错误，整个文件就基本作废了，那么无法在恢复到原来的数据</p>
 <p>​    <strong>恢复：</strong></p>
 <p>​    aof 实现恢复前，redis 需要先创建一个不带网络连接的伪客户端来实现，通过这个伪客户端来执行 aof 文件中的命令，将数据进行还原恢复。也就以为着如果 aof 命令日志文件较大，那么需要执行的命令就会很多，要进行恢复的话就会要缓慢一些，从而影响到正常使用</p>
-<p><a href="https://alexham.top/img/aof-%E6%81%A2%E5%A4%8D.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/aof-%E6%81%A2%E5%A4%8D.jpg" class="lazyload"></a> </p>
+<p>​    <a href="https://alexham.top/img/aof-%E6%81%A2%E5%A4%8D.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/aof-%E6%81%A2%E5%A4%8D.jpg" class="lazyload"></a> </p>
 <p>​    需要注意的是，如果 <strong>同时使用了 RDB 和 AOF 两种持久化方式，那么在进行恢复时则是优先使用 AOF 文件</strong> 来进行恢复，如果没有开启 AOF 则就是加载读取 RDB 的文件来恢复</p>
 <h4 id="两者的优缺点"><a href="#两者的优缺点" class="headerlink" title="两者的优缺点"></a>两者的优缺点</h4><p>​    RDB 的优点：</p>
 <p>​    1）文件体积会更小，因为文件内容是二进制存储的</p>
@@ -224,11 +224,11 @@ function activateLightMode(){
 <p>​    所以混合持久化的方式中，将全量和增量备份进行了隔离，全量快照依旧是使用 RDB，而此之后增量的部分利用 AOF 来记录修改的数据。这样既避免了全量快照频繁操作下影响性能，同时使用 AOF 记录增量也避免了 AOF 的文件过大。最后当进行第二次的全量快照时，AOF 的记录就会被清空，因为第二次的全量快照记录所有此前更改后的数据</p>
 <p>​    混合持久化兼容了 RDB 与 AOF 的优缺点，但是混合持久化默认也是不开启的，且混合持久化的文件在 4 之前的版本也无法识别读取</p>
 <p>​    <strong>总结：</strong></p>
-<p>​    如果数据不允许丢失，使用混合持久化会是最好的选择；如果允许分钟级数据丢失，使用 RDB 的效率和恢复都比较好；如果只是使用 AOF，应该优先选择 everysec 的配置</p>
+<p>​    <strong>如果数据不允许丢失，使用混合持久化会是最好的选择；如果允许分钟级数据丢失，使用 RDB 的效率和恢复都比较好；如果只是使用 AOF，应该优先选择 everysec 的配置</strong></p>
 <h3 id="Redis-主从模式"><a href="#Redis-主从模式" class="headerlink" title="Redis 主从模式"></a>Redis 主从模式</h3><p>​    redis 的高可用，首要的两个指标就是数据尽可能少的丢失，同时服务要尽可能少中断。前者 redis 已经有了 RDB 和 AOF 来负责，对于服务中断问题，redis 的做法是增加副本，将一份数据拷贝给多个 redis 实例，这样如果一个单点故障，其他实例依然能够提供服务，即通过集群来避免服务异常中断</p>
 <p>​    <strong>redis 的主从模式其实就是双实例，主从库采用的是 读写分离 的方式</strong>。对于所有的读操作，请求和访问主库，也可以访问从库；但是 <strong>对于写操作，首先需要在主库上执行，由主库将写操作同步发送给从句</strong>，从库执行得到新数据</p>
 <p>​    之所以将写操作分离开，其实是如果一个客户端对一个 key 修改了多次，而恰好又都是发给了不同的实例，那就会导致各个实例上的数据不一致</p>
-<p>​    <a href="https://alexham.top/img/redis-%E4%B8%BB%E4%BB%8E.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-%E4%B8%BB%E4%BB%8E.jpg" class="lazyload"></a></p>
+<p><a href="https://alexham.top/img/redis-%E4%B8%BB%E4%BB%8E.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-%E4%B8%BB%E4%BB%8E.jpg" class="lazyload"></a></p>
 <p>​    创建了主从库，最终目的就是为了实现数据同步，在主从库的同步过程中会有三个阶段：</p>
 <p>​    1）从库向主库发出连接， 请求进行同步。首先，从库需要执行   <code>replicaof 172.16.19.3 6379</code></p>
 <p>​    然后，从库会给主库发送 psync 命令，并携带 runID 和 offset，由于第一次做同步，从库不知道主库的唯一实例 ID，所以 runID 是 ？，同时 offset 的值为 -1 表示第一次拷贝</p>
@@ -236,7 +236,7 @@ function activateLightMode(){
 <p>​    2）主库通过 bgsave 生成 RDB 文件，并同步给从库。从库接收后，清空本地数据，并加载主库发送的 RDB，实现一致性</p>
 <p>​    在主库同步文件给从库期间，主库自己不会被阻塞，依然接收请求。这也意味着发送给从库的 RDB 不会包含发送期间主库执行所产生的新数据，为了确保一致性，主库会将在生成 RDB 后的写命令都存放在 replication buffer 中</p>
 <p>​    3）当从库接收了主库 RDB 后，主库会将 replication buffer 中记录的修改一并发给从库，从库只要重新执行操作，就能实现主从库的数据同步</p>
-<p>​    <a href="https://alexham.top/img/redis-%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5.jpg" class="lazyload"></a></p>
+<p><a href="https://alexham.top/img/redis-%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5.jpg" class="lazyload"></a></p>
 <p>​    由此可见，在主从同步的过程中，对主库的压力会较大，主库不但要自己生成 RDB，还需要通过网络传输这个文件。如果在一个集群中，从库节点数量很多，全部都关联主库的话，主库在 fork 创建子进程并生成 RDB 的消耗会很大，而且 fork 这一操作还会伴随阻塞。而就传输而言，RDB 文件也会直接占用网络带宽</p>
 <p>​    所以在集群架构下，要分摊掉主库的压力，可以使用级联从库来实现，即不让所有的从库实例全部关联自主库，让内存和性能较好的实例做主库的从库，其余从库各自以级联方式去关联到上层从库</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">				  		|--- 从库</span><br><span class="line">				  		|					 |--- 从库</span><br><span class="line">客户端 ----------------- 主库 -------- 从库 ------|</span><br><span class="line">				  		|					 |--- 从库</span><br><span class="line">				  		|--- 从库</span><br></pre></td></tr></table></figure></div>
@@ -245,7 +245,7 @@ function activateLightMode(){
 <p>​    2.8 版本之后，主从库采用了增量拷贝的方式来对连接恢复后继续进行数据同步。前面说到，主从库实现数据同步时，主库会利用 replication buffer 去做增量的写操作记录，来将同步时接收的数据在 RDB 发送给从库后自己接收的写操作</p>
 <p>​    而为了解决主从之间因为网络问题导致断联，使得恢复后同步数据，主库还有一个缓冲区 repl_backlog_buffer，该缓冲区会在主从断开后，记录恢复前主库接收的写操作，该缓冲区的目的是为了找出连接恢复后，主从之间命令执行的差异，防止连接恢复后从库做全量的拷贝</p>
 <p>​    repl_backlog_buffer 是一个环型的缓冲区，类似 InnoDB 的 redo log，所以也存在有两个指针位置，一个是主库自己会记录自己写到的位置，另一个是从库记录的自己写到的位置</p>
-<p>​    <a href="https://alexham.top/img/redis-repl_backlog_buffer.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-repl_backlog_buffer.jpg" class="lazyload"></a></p>
+<p><a href="https://alexham.top/img/redis-repl_backlog_buffer.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-repl_backlog_buffer.jpg" class="lazyload"></a></p>
 <p>​    随着命令的写入执行，repl_backlog_buffer 中主库的位置就会往后移动，那么新的位置与初始位置的偏移量就是 master_repl_offset，同理，对应从库也就是 slave_repl_offset，两个偏移量都随着命令执行而不断增加</p>
 <p>​    当主从网络连接突然断开，在恢复后。从库会先发 psync 命令，同时携带自己当前的 slave_repl_offset 给主库，因为主从网络连接断开后，主库依然在接受命令，所以自己在 repl_backlog_buffer 缓冲区上的位置会继续往后移动，当主库根据自己的 master_repl_offset 和从库的 slave_repl_offset 判断偏移量的差距后，表面在网络断开和恢复期间，主库接收的命令是哪部分，此时主库再将两个偏移量差的部分同步给从库，由此实现断联恢复后数据的一致性</p>
 <p>​    <strong>注意：</strong>repl_backlog_buffer 和 InnoDB 的 redo log 非常相似，所以共同存在的一个问题就是，一旦 repl_backlog_buffer 的空间写满了，主从之间连接还没恢复，那么主库的位置会继续往后移动，也就意味着会擦除数据来留出位置给新的数据。如果从库没有与主库重新连接上，或者从库的处理性能又比较慢跟不上主库新写入的数据速度，那就非常容易造成数据丢失或不一致</p>
@@ -259,20 +259,20 @@ function activateLightMode(){
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># sentinel monitor 代表监控</span><br><span class="line"># mymaster 代表服务器的名称，可以自定义</span><br><span class="line"># 192.168.13.1 代表监控的主服务器，6379 代表端口</span><br><span class="line"># 2 代表只有两个或两个以上的哨兵认为主服务器不可用的时候，才会进行 failover (主从切换)操作</span><br><span class="line">sentinel monitor &lt;master-name&gt; &lt;ip&gt; &lt;redis-port&gt; &lt;quorum&gt;</span><br></pre></td></tr></table></figure></div>
 
 <p>​    <a href="https://alexham.top/img/redis-%E4%B8%BB%E5%AE%A2%E8%A7%82%E5%88%A4%E6%96%AD.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-%E4%B8%BB%E5%AE%A2%E8%A7%82%E5%88%A4%E6%96%AD.jpg" class="lazyload"></a></p>
-<p>​    <strong>选主：</strong> 哨兵选主大致分为两个部分 “筛选” 和 “打分”</p>
+<p>​    <strong>选主：</strong> <strong>哨兵选主大致分为两个部分 “筛选” 和 “打分”</strong></p>
 <p>​    首先，肯定是要筛选掉下线的从库，其次还需要判断从库的网络连接状态，可以在配置文件中设置 down-after-milliseconds * 10 的配置项，表示实例与主库断开连接后尝试连接的最大超时时间，如果超出时间一直没有恢复主从连接，就认定为发生主从断连。10 表示就是发生断连的次数超过 10 次，那么可以认定当前实例的网络状态并不好，也就不适合作为新的主库，从而筛选掉</p>
 <p>​    之后，就是打分的环节，分为了三个阶段，依次是优先级、复制进度和从库自己的 ID。在任何一阶段中，得到最高分的从库就可以被作为新的主库，并退出后续的阶段，所以如果分数相同，就会进入下一阶段去打分</p>
 <p>​    <strong>通知：</strong>当哨兵选出新的主库后，就需要将这个新主库发送给其他的从库，告知主库已经更换，那么从库就会通过执行 repliaof 来与新主库进行同步；除此之外，哨兵还需要通知连接的客户端，让他们与新主库进行连接</p>
 <h3 id="发布与订阅"><a href="#发布与订阅" class="headerlink" title="发布与订阅"></a>发布与订阅</h3><p>​    配置哨兵集群下，各个哨兵的互相发现，利用就是 redis 的 pub/sub 机制。哨兵与主库建立连接后，就会获取到主库的 ip 和 端口，当主库开启了发布与订阅功能，各个哨兵实例就能通过主库知道其他哨兵的 ip 和 端口，这样一来哨兵集群就能实现消息传递，比如前面的主库是否下线的判断信息传递</p>
 <p>​    发布订阅除了哨兵可以使用之外，自己编写的应用程序也能通过 redis 实现发布和订阅。那么为了区分开不同应用的消息，发布订阅模式就产生了频道，来进行区分。比如在主库上，所有的关联的哨兵都通过 <code>__sentinel__:hello</code> 频道交流，由此构建成哨兵集群</p>
-<p>​    <strong>补充：</strong>哨兵集群中，当有哨兵实例认为主库处于主观下线后，会通过频道向其他哨兵发送 is-master-down-by-addr 的命令，其余哨兵会检测自己与主库的连接，返回 Y 或 N 表示自己与主句是否可连来做出投。当最终赞成票数达到了配置 quorum 的设定值，那么就认定主库处于客观下线状态    </p>
+<p>​    <strong>补充：</strong>哨兵集群中，当有哨兵实例认为主库处于主观下线后，会通过频道向其他哨兵发送 is-master-down-by-addr 的命令，其余哨兵会检测自己与主库的连接，返回 Y 或 N 表示自己与主句是否可连来做出投票。当最终赞成票数达到了配置 quorum 的设定值，那么就认定主库处于客观下线状态    </p>
 <p><a href="https://alexham.top/img/redis-%E5%93%A8%E5%85%B5%E6%B2%9F%E9%80%9A.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-%E5%93%A8%E5%85%B5%E6%B2%9F%E9%80%9A.jpg" class="lazyload"></a></p>
 <p>​    另外，哨兵集群完成了主库的下线判断，还需要选出一个哨兵做最后的主从切换，所以依然会通过发布订阅机制再去进行投票选出一个 leader。如果一个哨兵想成为 leader，它需要满足两个条件：1）拿到半数以上的投票  2）这个票数要大于等于 quorum 的值</p>
-<p>​    当一个哨兵认为主库已经客观下线，并且自己想成为 leader，就会首先给自己投一票，并将发送命令给其余哨兵。其余哨兵如果同样判断主库是客观下线后，会是同样的操作。注意，每一个哨兵都只有一次投票机会，都是默认给自己投票，当有的哨兵没有判断主库客观下线后，会优先给第一个收到投票请求的哨兵投票，之后其余的哨兵全部都给反对票</p>
+<p>​    当一个哨兵认为主库已经客观下线，并且自己想成为 leader，就会首先给自己投一票，并将发送命令给其余哨兵。其余哨兵如果同样判断主库是客观下线后，会是同样的操作。<strong>注意，每一个哨兵都只有一次投票机会，都是默认给自己投票，当有的哨兵没有判断主库客观下线后，会优先给第一个收到投票请求的哨兵投票，之后其余的哨兵全部都给反对票</strong></p>
 <p>​    如果再一次选择 leader 中没有结果，哨兵集群会等待故障转移的 2 倍的时间，再次进行一次 leader 的选举。注意，如果一个哨兵集群只有两个实例，一个哨兵要称为 leader 就需要得到 2 票，如果其中一个哨兵挂掉，那么就无法进行主从切换，所以一个哨兵集群最低保险是配置 3 个哨兵</p>
 <p>​    前文说到，哨兵能够完成主从的切换，所以哨兵自然也需要和从库建立连接，它会发送 info 命令给主库，主库会将自己的从库列表发送哨兵，由此哨兵就能知道与主库连接的从库并与之建立连接</p>
 <p>​    同时由于 pub/sub 的机制存在，使得客户端也能与哨兵进行交流，这样一来客户端就能通过频道知道主从之间的一些状态信息</p>
-<p>​    <a href="https://alexham.top/img/redis-pub-sub.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-pub-sub.jpg" class="lazyload"></a></p>
+<p><a href="https://alexham.top/img/redis-pub-sub.jpg" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://alexham.top/img/redis-pub-sub.jpg" class="lazyload"></a></p>
 <p>​    那么哨兵完成主从切换后，客户端通过 switch_master 频道知道新的主库的 ip 和端口，从而实现与新主库的连接</p>
 <h3 id="Redis-事务"><a href="#Redis-事务" class="headerlink" title="Redis 事务"></a>Redis 事务</h3><p>​    redis 事务和 mysql 中事务的概念并不相同，在 mysql 中事务的特性是 ACID，在 <strong>redis 中事务表现的是将多个命令组合进行一次性执行</strong></p>
 <p>​    原子性（A）： redis 中 <strong>单独执行一个命令是具有原子性的</strong>，但是在事务中，<strong>多个命令执行并不就有原子性，因为多个命令执行没有回滚机制来保证全成功和全失败</strong></p>
